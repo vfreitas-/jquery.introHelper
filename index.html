@@ -1,1 +1,75 @@
-jquery.introHelper page
+<!DOCTYPE html>
+<html>
+<head>
+	<title>jQuery Introduction Helper Plugin</title>
+	<link rel="stylesheet" type="text/css" href="jquery.introHelper.css">
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="jquery.introHelper.js"></script>
+</head>
+<body>
+
+	<style type="text/css">
+		button {
+		  display: inline-block;
+		  background: #ff6666;
+		  padding: 15px;
+		  border: 0;
+		  color: white;
+		  font-family: Arial;
+		}
+
+		.menu {
+		  position: relative;
+		}
+		.menu ul {
+		  position: relative;
+		}
+		.menu ul li {
+		  display: inline-block;
+		}
+	</style>
+
+	<div style="width: 600px;margin: 100px auto;text-align: center;" data-helper-text='This is a really great plugin, you should use it!' data-helper-step='5'>
+		<h1>jQuery Introduction Helper Plugin</h1>
+		<h3>jquery.introHelper.js</h3>
+		<button id='btn' style="display: inline-block;">Click Here</button>
+	</div>
+
+	<div class='menu' data-helper-text='Hey I am here to help!' data-helper-step='1'>
+	    <ul>
+	      <li>
+	        <a href='#'>One</a>
+	      </li>
+	      <li>
+	        <a href='#'>Two</a>
+	      </li>
+	      <li>
+	        <a href='#'>Three</a>
+	      </li>
+	      <li>
+	        <a href='#'>Four</a>
+	      </li>
+	    </ul>
+	  </div>
+	  <p data-helper-text='Hey I am here to help! 2' data-helper-step='2'>
+	    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ullamcorper neque eu mattis venenatis. Vestibulum non nisi in risus convallis scelerisque. Nulla facilisi. Proin pellentesque arcu id nulla sodales faucibus. Nunc consectetur justo felis, ut faucibus dolor ultrices in. Nam laoreet congue convallis. Vestibulum egestas nisl nec fermentum consequat. Aenean feugiat elit ut molestie fringilla. Nunc porta, leo tempus vulputate convallis, enim lorem semper odio, non ornare dolor diam in ligula.
+	  </p>
+	  <p data-helper-text='Hey I am here to help! 3' data-helper-step='3'>
+	    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ullamcorper neque eu mattis venenatis. Vestibulum non nisi in risus convallis scelerisque. Nulla facilisi. Proin pellentesque arcu id nulla sodales faucibus. Nunc consectetur justo felis, ut faucibus dolor ultrices in. Nam laoreet congue convallis. Vestibulum egestas nisl nec fermentum consequat. Aenean feugiat elit ut molestie fringilla. Nunc porta, leo tempus vulputate convallis, enim lorem semper odio, non ornare dolor diam in ligula.
+	  </p>
+	  <p data-helper-text='Hey I am here to help! 4' data-helper-step='4'>
+	    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ullamcorper neque eu mattis venenatis. Vestibulum non nisi in risus convallis scelerisque. Nulla facilisi. Proin pellentesque arcu id nulla sodales faucibus. Nunc consectetur justo felis, ut faucibus dolor ultrices in. Nam laoreet congue convallis. Vestibulum egestas nisl nec fermentum consequat. Aenean feugiat elit ut molestie fringilla. Nunc porta, leo tempus vulputate convallis, enim lorem semper odio, non ornare dolor diam in ligula.
+	  </p>
+	</div>
+
+	<script type="text/javascript">
+	$(document).ready(function() {
+		$('#btn').on('click', function() {
+			$('body').helperIntro('start');
+		});
+	});
+	</script>
+
+</body>
+
+</html>

@@ -2,8 +2,42 @@
  * Author: Vitor Freitas vfreitas-
  * Author URL: http://codepen.io/vfreitas-, https://github.com/vfreitas-
  * Date: 11/08/2015
+ * Version: 1.0;
  */
-/* Work in Progress */
+/**
+* Usage:
+
+introHelper have 3 data attributes that let's you define 
+your awesome introduction.
+
+data-helper-step -> step number, [1,2,3,4,5,...100...]
+data-helper-text -> text to show on the step message
+data-helper-position -> can be [top, left, right, bottom], define the
+position of the message box, relative to his step
+
+
+To begin your introduction, just select your top-level element, the
+element/container that will hold all the steps.
+Ex. body, main-wrapper, container-fluid, row, col-md-n
+
+And call the plugin method
+
+$('body').helperIntro('action');
+
+action can be ->
+'start' -> start the introduction
+'finalize' -> stops the introduction
+*/
+
+/* Work in Progress:
+
+- Add new action methods
+- Make an introduction progress bar
+- Improve the element 'feature' container
+- Add more keyboard control and button focus
+- Etc..
+
+ */
 
 ;+function($, window) {
 

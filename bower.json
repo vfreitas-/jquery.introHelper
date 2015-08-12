@@ -1,0 +1,26 @@
+{
+  "name": "jquery.introHelper",
+  "version": "0.0.0",
+  "homepage": "https://github.com/vfreitas-/jquery.introHelper",
+  "authors": [
+    "https://github.com/vfreitas-"
+  ],
+  "description": "A jQuery plugin, to make awesome introductions to your website components and features.",
+  "main": "src/js/jquery.introHelper.js",
+  "keywords": [
+    "jquery",
+    "introductions",
+    "helper",
+    "plugin",
+    "intro",
+    "demo"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

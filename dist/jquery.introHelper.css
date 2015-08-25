@@ -139,6 +139,9 @@
 .helper-area-focus .helper-box .helper-box__buttons .helper-box__next {
   margin-left: 2px;
 }
+.helper-area-focus .helper-box .helper-box__buttons .helper-box__next.success {
+  background-color: #69bd45;
+}
 .helper-area-focus .helper-box .helper-box__buttons .helper-box__skip {
   margin-right: auto;
   background-color: #519fd7;

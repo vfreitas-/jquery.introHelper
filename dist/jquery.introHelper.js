@@ -1,4 +1,5 @@
-/*
+
+/*	
  * Author: Vitor Freitas vfreitas-
  * Author URL: http://codepen.io/vfreitas-, https://github.com/vfreitas-
  * Date: 11/08/2015
@@ -50,7 +51,7 @@ action can be ->
 					<div class="helper-box__msg"></div> \
 					<div class="helper-box__buttons">\
 						<button class="helper-box__skip">Skip</button> \
-						<button class="helper-box__prev">Prev</button> \
+						<button class="helper-box__prev disabled" disabled="true">Prev</button> \
 						<button class="helper-box__next">Next</button> \
 					</div>	\
 				</div> \
@@ -97,6 +98,9 @@ action can be ->
 			if(isHelperActive) {
 
 			    switch(event.which) {
+			    	case 27: 
+			    		finalize();
+			    	break;
 			        case 37: 
 			        	if( !(_box_prev.hasClass('disabled')) ) {
 				        	event.preventDefault();
@@ -120,10 +124,18 @@ action can be ->
 			else
 				_box_prev.removeClass('disabled').attr('disabled', false);
 
-			if(getStepNumber($currentStep) === stepsSize()) 
-				_box_next.addClass('disabled').attr('disabled', true);
-			else
-				_box_next.removeClass('disabled').attr('disabled', false);
+			if(getStepNumber($currentStep) === stepsSize()) {
+				_box_next.text('Finish').addClass('success');
+				_box_next.unbind('click').on('click', function(event) {
+					finalize();
+				});
+			}
+			else {
+				_box_next.removeClass('success').text('Next');
+				_box_next.unbind('click').on('click', function(event) {
+					setCurrentStep(getStepNumber($currentStep) + 1);
+				});
+			}
 		});
 
 		$(window).on('resize', function() {
@@ -152,9 +164,9 @@ action can be ->
 
 		function finalize() {
 			$steps.removeClass('helper-relative');
-			_overlay.removeClass('active');
-			_area_focus.removeClass('active');
-			_area.removeClass('active');
+			_overlay.remove();
+			_area_focus.remove();
+			_area.remove();
 
 			isHelperActive = false;
 		}

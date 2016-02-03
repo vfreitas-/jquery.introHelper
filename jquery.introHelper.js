@@ -7,7 +7,7 @@
 /**
 * Usage:
 
-introHelper have 3 data attributes that let's you define 
+introHelper have 3 data attributes that let's you define
 your awesome introduction.
 
 data-helper-step -> step number, [1,2,3,4,5,...100...]
@@ -39,7 +39,7 @@ action can be ->
 
  */
 
-;+function($, window) {
+;+function($, window, document) {
 
 	'use strict';
 
@@ -50,31 +50,33 @@ action can be ->
 					<div class="helper-box__msg"></div> \
 					<div class="helper-box__buttons">\
 						<button class="helper-box__skip">Skip</button> \
-						<button class="helper-box__prev">Prev</button> \
+						<button class="helper-box__prev disabled" disabled="true">Prev</button> \
 						<button class="helper-box__next">Next</button> \
 					</div>	\
 				</div> \
 			</div>';
 
 
-		var _this		= $(this),
-			_body		= $('body'),
-			_overlay 	= $('<div class="helper-overlay"></div>'),
-			_area 		= $('<div class="helper-area"></div>'),
-			_area_focus = $(areaHtml),
-			_box		= _area_focus.find('.helper-box'),
-			_box_msg	= _box.find('.helper-box__msg'),
-			_box_prev	= _box.find('.helper-box__prev'),
-			_box_next	= _box.find('.helper-box__next'),
-			_box_skip 	= _box.find('.helper-box__skip');
+		var _this		= $(this)
+		  , _body		= $('body')
+		  , _overlay 	= $('<div class="helper-overlay"></div>')
+		  , _area 		= $('<div class="helper-area"></div>')
+		  , _area_focus = $(areaHtml)
+		  , _box		= _area_focus.find('.helper-box')
+		  , _box_msg	= _box.find('.helper-box__msg')
+		  , _box_prev	= _box.find('.helper-box__prev')
+		  , _box_next	= _box.find('.helper-box__next')
+		  , _box_skip 	= _box.find('.helper-box__skip');
 
-		var $steps 			= _this.find('[data-helper-step]'),
-			$currentStep	= _this.find('[data-helper-step=1]');
+		var $steps 			= _this.find('[data-helper-step]')
+		  , $currentStep	= _this.find('[data-helper-step=1]');
 
-		var isHelperActive = false,
-			isStepChanging = false;
+		var isHelperActive = false
+		  , isStepChanging = false;
 
 		var changeStepInterval = 300;
+
+		var validPos = ['fixed', 'absolute'];
 
 		if(action === 'start')
 			start();
@@ -97,33 +99,44 @@ action can be ->
 			if(isHelperActive) {
 
 			    switch(event.which) {
-			        case 37: 
+			    	case 27:
+			    		finalize();
+			    	break;
+			        case 37:
 			        	if( !(_box_prev.hasClass('disabled')) ) {
 				        	event.preventDefault();
 				        	_box_prev.trigger('click');
 			        	}
 			        break;
 
-			        case 39: 
+			        case 39:
 			        	if( !(_box_next.hasClass('disabled')) ) {
 				        	event.preventDefault();
 				        	_box_next.trigger('click');
 			        	}
 			        break;
-			    }  
+			    }
 			}
 		});
 
 		$(document).on('helper-step', function(event) {
-			if(getStepNumber($currentStep) === 1) 
+			if(getStepNumber($currentStep) === 1)
 				_box_prev.addClass('disabled').attr('disabled', true);
 			else
 				_box_prev.removeClass('disabled').attr('disabled', false);
 
-			if(getStepNumber($currentStep) === stepsSize()) 
-				_box_next.addClass('disabled').attr('disabled', true);
-			else
-				_box_next.removeClass('disabled').attr('disabled', false);
+			if(getStepNumber($currentStep) === stepsSize()) {
+				_box_next.text('Finish').addClass('success');
+				_box_next.unbind('click').on('click', function(event) {
+					finalize();
+				});
+			}
+			else {
+				_box_next.removeClass('success').text('Next');
+				_box_next.unbind('click').on('click', function(event) {
+					setCurrentStep(getStepNumber($currentStep) + 1);
+				});
+			}
 		});
 
 		$(window).on('resize', function() {
@@ -135,14 +148,14 @@ action can be ->
 
 
 		function start() {
-			$currentStep.addClass('helper-relative');
+			if($steps.length < 1) return;
 
 			_overlay.appendTo(_body);
 			_area.appendTo(_body);
 			_area_focus.appendTo(_body);
 
 			setCurrentStep(1);
-	
+
 			_overlay.addClass('active');
 			_area_focus.addClass('active');
 			_area.addClass('active');
@@ -151,10 +164,10 @@ action can be ->
 		}
 
 		function finalize() {
-			$steps.removeClass('helper-relative');
-			_overlay.removeClass('active');
-			_area_focus.removeClass('active');
-			_area.removeClass('active');
+			$steps.removeClass('helper-relative helper-z-index');
+			_overlay.remove();
+			_area_focus.remove();
+			_area.remove();
 
 			isHelperActive = false;
 		}
@@ -165,15 +178,16 @@ action can be ->
 
 			var position = getStepPosition(newStep),
 				place    = getStepBoxPlace(newStep);
-			
 
-			$steps.removeClass('helper-relative');
-			$(newStep).addClass('helper-relative');
+			$steps.removeClass('helper-relative helper-z-index');
+			$(newStep).addClass('helper-z-index');
+			if(validPos.indexOf($(newStep).css('position')) < 0)
+				$(newStep).addClass('helper-relative');
 
 			_area_focus.css(position);
 			_area.animate(position, changeStepInterval);
 
-			if(place) { 
+			if(place) {
 				var placeClass = 'helper-box ' + place;
 				_box.attr('class', placeClass);
 			}
@@ -225,4 +239,4 @@ action can be ->
 
 	}
 
-}(jQuery, window);	
+}(jQuery, window, document, undefined);
